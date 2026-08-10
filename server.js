@@ -18,10 +18,14 @@ const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
 // const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
 
 try {
+  console.log('Connecting to MongoDB...');
+
   await mongoose.connect(db);
-  console.log('MongoDB connected');
+
+  console.log('✅ MongoDB connected');
 } catch (err) {
-  console.error('MongoDB connection failed:', err);
+  console.error('❌ MongoDB connection failed');
+  console.error(err);
 }
 
 const server = app.listen(port, () =>
