@@ -49,9 +49,10 @@ export const userSignup = async (req, res, next) => {
 
     createSendToken(newUser, 201, res);
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
     res.status(400).json({
-      message: 'failed',
+      status: 'failed',
+      message: err.message,
     });
   }
 };

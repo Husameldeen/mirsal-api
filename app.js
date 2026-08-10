@@ -13,6 +13,9 @@ const limiter = rateLimit({
   message: 'too much request frm thi IP, Please try again in one hour!',
 });
 
+const port = process.env.PORT || 3000;
+const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
+
 const app = express();
 
 app.use(helmet()); // Set HTTP Security Headers
@@ -22,7 +25,7 @@ app.use(express.json({ limit: '10kb' })); // Reading  data from body of request
 app.set('query parser', 'extended'); // Reading  data from body of request
 
 app.get('/', (req, res, next) => {
-  res.status(200).json({ status: 'success' });
+  res.status(200).json({ status: 'success', port, db });
 });
 
 app.use('/users', usersRouter);
