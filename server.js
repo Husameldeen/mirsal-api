@@ -15,7 +15,7 @@ const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
 
 // mongoose.connect(db).then(() => console.log('connected successfully!!!'));
 
-const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
+// const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
 
 try {
   await mongoose.connect(db);
