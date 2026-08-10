@@ -13,15 +13,16 @@ process.on('uncaughtException', (err) => {
 const port = process.env.PORT || 3000;
 const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
 
-export async function connectDB() {
-  if (mongoose.connection.readyState >= 1) return;
+// mongoose.connect(db).then(() => console.log('connected successfully!!!'));
 
-  await mongoose
-    .connect(db)
-    .then(() => console.log('connected successfully!!!'));
+const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
+
+try {
+  await mongoose.connect(db);
+  console.log('MongoDB connected');
+} catch (err) {
+  console.error('MongoDB connection failed:', err);
 }
-
-// await mongoose.connect(db).then(() => console.log('connected successfully!!!'));
 
 const server = app.listen(port, () =>
   console.log(`Server is listening to request on port ${port}`),
