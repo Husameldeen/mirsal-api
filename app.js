@@ -15,6 +15,19 @@ const limiter = rateLimit({
   message: 'too much request frm thi IP, Please try again in one hour!',
 });
 
+dotenv.config();
+
+console.log('APP STARTED');
+
+const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
+
+try {
+  await mongoose.connect(db);
+  console.log('MongoDB connected from app.js');
+} catch (err) {
+  console.error(err);
+}
+
 const app = express();
 
 app.use(helmet()); // Set HTTP Security Headers
@@ -46,23 +59,5 @@ app.use('/users', usersRouter);
 app.use((req, res, next) => {
   next('cant find this route');
 });
-
-const port = process.env.PORT || 3000;
-const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
-
-try {
-  console.log('Connecting to MongoDB...');
-
-  await mongoose.connect(db);
-
-  console.log('✅ MongoDB connected');
-} catch (err) {
-  console.error('❌ MongoDB connection failed');
-  console.error(err);
-}
-
-const server = app.listen(port, () =>
-  console.log(`Server is listening to request on port ${port}`),
-);
 
 export default app;
