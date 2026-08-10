@@ -17,6 +17,8 @@ const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
 
 // const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
 
+console.log('SERVER.JS IS RUNNING');
+
 try {
   console.log('Connecting to MongoDB...');
 

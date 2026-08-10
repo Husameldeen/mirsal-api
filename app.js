@@ -27,6 +27,8 @@ const dbStatus = {
   hasDBPASS: !!process.env.DB_PASS,
 };
 
+console.log('APP.JS IS RUNNING');
+
 app.get('/db-status', (req, res) => {
   res.json({
     readyState: mongoose.connection.readyState,
