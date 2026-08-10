@@ -2,6 +2,7 @@ import express from 'express';
 import usersRouter from './routes/usersRoute.js';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
+import mongoose from 'mongoose';
 
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
