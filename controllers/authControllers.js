@@ -33,7 +33,6 @@ function createSendToken(user, statusCode, res) {
 }
 
 export const userSignup = async (req, res, next) => {
-  console.log('signup is working');
   try {
     const newUser = await User.create({
       name: req.body.name,
@@ -58,7 +57,6 @@ export const userSignup = async (req, res, next) => {
 };
 
 export const driverSignup = async (req, res, next) => {
-  console.log('signup is working');
   try {
     if (!req.body.carPlateNum)
       throw new Error('Please provide your vechile plate number!');

@@ -14,8 +14,6 @@ const limiter = rateLimit({
   message: 'too much request frm thi IP, Please try again in one hour!',
 });
 
-console.log('APP STARTED');
-
 const app = express();
 
 app.use(helmet()); // Set HTTP Security Headers
@@ -24,22 +22,8 @@ app.use('/api', limiter); // Limit requests from same IP
 app.use(express.json({ limit: '10kb' })); // Reading  data from body of request
 app.set('query parser', 'extended'); // Reading  data from body of request
 
-const dbStatus = {
-  hasDBURL: !!process.env.DB_URL,
-  hasDBPASS: !!process.env.DB_PASS,
-};
-
-console.log('APP.JS IS RUNNING');
-
-app.get('/db-status', (req, res) => {
-  res.json({
-    readyState: mongoose.connection.readyState,
-    DB: dbStatus,
-  });
-});
-
 app.get('/', (req, res, next) => {
-  res.status(200).json({ status: 'success', env: process.env });
+  res.status(200).send('Server is running on vercel!');
 });
 
 app.use('/users', usersRouter);
