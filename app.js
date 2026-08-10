@@ -2,6 +2,7 @@ import express from 'express';
 import usersRouter from './routes/usersRoute.js';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
+import { connectDB } from './server.js';
 
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
@@ -25,7 +26,7 @@ app.get('/', (req, res, next) => {
   res.status(200).json({ status: 'success', env: process.env });
 });
 
-app.use('/users', usersRouter);
+app.use('/users', connectDB, usersRouter);
 
 app.use((req, res, next) => {
   next('cant find this route');
