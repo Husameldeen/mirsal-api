@@ -3,7 +3,9 @@ import usersRouter from './routes/usersRoute.js';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import connectDB from './db.js';
+
+await connectDB();
 
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
@@ -15,18 +17,7 @@ const limiter = rateLimit({
   message: 'too much request frm thi IP, Please try again in one hour!',
 });
 
-dotenv.config();
-
 console.log('APP STARTED');
-
-const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
-
-try {
-  await mongoose.connect(db);
-  console.log('MongoDB connected from app.js');
-} catch (err) {
-  console.error(err);
-}
 
 const app = express();
 
