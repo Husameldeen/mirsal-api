@@ -18,7 +18,11 @@ const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
 // const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
 
 try {
-  await mongoose.connect(db);
+  await mongoose.connect(db, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  });
   console.log('MongoDB connected');
 } catch (err) {
   console.error('MongoDB connection failed:', err);
