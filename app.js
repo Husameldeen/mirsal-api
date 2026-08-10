@@ -3,9 +3,6 @@ import usersRouter from './routes/usersRoute.js';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
-import connectDB from './db.js';
-
-await connectDB();
 
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
