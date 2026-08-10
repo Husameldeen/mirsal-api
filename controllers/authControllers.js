@@ -52,7 +52,7 @@ export const userSignup = async (req, res, next) => {
     console.log(err.message);
     res.status(400).json({
       status: 'failed',
-      message: err,
+      message: err.message,
     });
   }
 };
@@ -82,7 +82,7 @@ export const driverSignup = async (req, res, next) => {
     console.log(err.message);
     res.status(400).json({
       status: 'failed',
-      message: err,
+      message: err.message,
     });
   }
 };
