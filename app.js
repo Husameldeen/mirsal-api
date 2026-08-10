@@ -22,7 +22,7 @@ app.use('/api', limiter); // Limit requests from same IP
 app.use(express.json({ limit: '10kb' })); // Reading  data from body of request
 app.set('query parser', 'extended'); // Reading  data from body of request
 
-const x = {
+const dbStatus = {
   hasDBURL: !!process.env.DB_URL,
   hasDBPASS: !!process.env.DB_PASS,
 };
@@ -30,7 +30,7 @@ const x = {
 app.get('/db-status', (req, res) => {
   res.json({
     readyState: mongoose.connection.readyState,
-    x,
+    DB: dbStatus,
   });
 });
 
