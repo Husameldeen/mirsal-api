@@ -10,14 +10,14 @@ dotenv.config();
 //   process.exit(1);
 // });
 
-const port = process.env.PORT || 3000;
-const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
-
 // mongoose.connect(db).then(() => console.log('connected successfully!!!'));
 
 // const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
 
 console.log('SERVER.JS IS RUNNING');
+
+const port = process.env.PORT || 3000;
+const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
 
 try {
   console.log('Connecting to MongoDB...');
