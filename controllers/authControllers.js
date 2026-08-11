@@ -88,6 +88,8 @@ export const driverSignup = async (req, res, next) => {
 export const login = async (req, res, next) => {
   const { email, password } = req.body;
 
+  console.log(req.headers);
+
   try {
     if (!email || !password)
       throw new Error('Please provide your email & password!');
@@ -102,6 +104,57 @@ export const login = async (req, res, next) => {
   } catch (err) {
     console.log(err.message);
     res.status(400).json({
+      status: 'failed',
+      message: err.message,
+    });
+  }
+};
+
+export const protectedRoute = async (req, res, next) => {
+  try {
+    // GET USER TOKEN AND VERFIY IT
+    let token;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith('Bearer')
+    ) {
+      token = req.headers.authorization.split(' ')[1];
+      console.log(token);
+    }
+
+    if (!token) throw new Error('Please login to performe this action!');
+
+    // VERFING THE TOKEN
+    const decodedJWT = await jwt.verify(token, process.env.JWT_SECRET);
+
+    // CHECK IF USER STILL EXIST IN DATABASE
+    const currentUser = await User.findById(decodedJWT.id);
+
+    if (!currentUser) throw new Error('This user has been deleted!');
+
+    req.user = currentUser;
+
+    next();
+  } catch (err) {
+    console.log(err.message);
+    res.status(400).json({
+      status: 'failed',
+      message: err.message,
+    });
+  }
+};
+
+export const getUserById = async (req, res, next) => {
+  try {
+    const userData = await User.findById(req.user._id);
+
+    res.status(200).json({
+      status: 'success',
+      data: userData,
+    });
+  } catch (err) {
+    console.log(err.message);
+    res.status(404).json({
       status: 'failed',
       message: err.message,
     });
