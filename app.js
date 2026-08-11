@@ -3,6 +3,7 @@ import usersRouter from './routes/usersRoute.js';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
+import cors from 'cors';
 
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
@@ -16,6 +17,16 @@ const limiter = rateLimit({
 
 const app = express();
 
+app.use(
+  cors({
+    origin: [
+      'http://localhost:5173', // Vite
+      'http://localhost:3000', // Next.js
+      'https://your-frontend.vercel.app',
+    ],
+    credentials: true,
+  }),
+); // set HTTP headers on response
 app.use(helmet()); // Set HTTP Security Headers
 app.use('/api', limiter); // Limit requests from same IP
 

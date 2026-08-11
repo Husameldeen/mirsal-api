@@ -84,3 +84,26 @@ export const driverSignup = async (req, res, next) => {
     });
   }
 };
+
+export const login = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  try {
+    if (!email || !password)
+      throw new Error('Please provide your email & password!');
+
+    const user = await User.findOne({ email }).select('+password');
+
+    const isCorrectPass = await user?.checkPassword(password, user.password);
+
+    if (!user || !isCorrectPass) throw new Error('Wrong email or password!');
+
+    createSendToken(user, 200, res);
+  } catch (err) {
+    console.log(err.message);
+    res.status(400).json({
+      status: 'failed',
+      message: err.message,
+    });
+  }
+};
