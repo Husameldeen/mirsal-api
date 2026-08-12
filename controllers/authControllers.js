@@ -141,6 +141,19 @@ export const protectedRoute = async (req, res, next) => {
   }
 };
 
+export const restrictedTo = (...role) => {
+  return (req, res, next) => {
+    if (!role.includes(req.user.role)) {
+      res
+        .status(403)
+        .json({ message: 'you are not authorized to perform this action!' });
+      return;
+    }
+
+    next();
+  };
+};
+
 export const getUserById = async (req, res, next) => {
   try {
     const userData = await User.findById(req.user._id);

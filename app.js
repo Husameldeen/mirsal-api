@@ -1,5 +1,6 @@
 import express from 'express';
 import usersRouter from './routes/usersRoute.js';
+import dishesRouter from './routes/dishesRouter.js';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
@@ -42,7 +43,8 @@ app.get('/', (req, res, next) => {
   res.status(200).send('Server is running on vercel!');
 });
 
-app.use('/users', usersRouter);
+app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/dishes', dishesRouter);
 
 app.use((req, res, next) => {
   next('cant find this route');
