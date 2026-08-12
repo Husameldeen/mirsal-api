@@ -16,6 +16,8 @@ function createSendToken(user, statusCode, res) {
       Date.now() + process.env.JWT_COOKIE_EXPIRY * 24 * 60 * 60 * 1000,
     ),
     httpOnly: true,
+    // sameSite: 'Lax',
+    // secure: false,
   };
 
   if (process.env.NODE_ENV === 'PRODUCTION') cookieOptions.secure = true;
@@ -48,7 +50,6 @@ export const userSignup = async (req, res, next) => {
 
     createSendToken(newUser, 201, res);
   } catch (err) {
-    console.log(err.message);
     res.status(400).json({
       status: 'failed',
       message: err.message,
@@ -77,7 +78,6 @@ export const driverSignup = async (req, res, next) => {
 
     createSendToken(newUser, 201, res);
   } catch (err) {
-    console.log(err.message);
     res.status(400).json({
       status: 'failed',
       message: err.message,
@@ -87,8 +87,6 @@ export const driverSignup = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
   const { email, password } = req.body;
-
-  console.log(req.headers);
 
   try {
     if (!email || !password)
@@ -102,7 +100,6 @@ export const login = async (req, res, next) => {
 
     createSendToken(user, 200, res);
   } catch (err) {
-    console.log(err.message);
     res.status(400).json({
       status: 'failed',
       message: err.message,
@@ -119,7 +116,8 @@ export const protectedRoute = async (req, res, next) => {
       req.headers.authorization.startsWith('Bearer')
     ) {
       token = req.headers.authorization.split(' ')[1];
-      console.log(token);
+    } else if (req.cookies.jwt) {
+      token = req.cookies.jwt;
     }
 
     if (!token) throw new Error('Please login to performe this action!');
@@ -136,7 +134,6 @@ export const protectedRoute = async (req, res, next) => {
 
     next();
   } catch (err) {
-    console.log(err.message);
     res.status(400).json({
       status: 'failed',
       message: err.message,
@@ -153,7 +150,6 @@ export const getUserById = async (req, res, next) => {
       data: userData,
     });
   } catch (err) {
-    console.log(err.message);
     res.status(404).json({
       status: 'failed',
       message: err.message,
