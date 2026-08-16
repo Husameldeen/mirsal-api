@@ -3,9 +3,9 @@ import usersRouter from './routes/usersRoute.js';
 import dishesRouter from './routes/dishesRouter.js';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
-import mongoose from 'mongoose';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import orderRouter from './routes/ordersRoute.js';
 
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
@@ -32,7 +32,7 @@ app.use(express.static('public'));
 //     credentials: true,
 //   }),
 // ); // set HTTP headers on response
-app.use(cors())
+app.use(cors());
 app.use(cookieParser());
 app.use(helmet()); // Set HTTP Security Headers
 app.use('/api', limiter); // Limit requests from same IP
@@ -40,12 +40,13 @@ app.use('/api', limiter); // Limit requests from same IP
 app.use(express.json({ limit: '10kb' })); // Reading  data from body of request
 app.set('query parser', 'extended'); // Reading  data from body of request
 
-app.get('/', (req, res, next) => {
+app.get('/', (req, res) => {
   res.status(200).send('Server is running on vercel!');
 });
 
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/dishes', dishesRouter);
+app.use('/api/v1/orders', orderRouter);
 
 app.use((req, res, next) => {
   next('cant find this route');

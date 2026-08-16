@@ -7,7 +7,7 @@ import {
 
 const dishesRouter = express.Router();
 
-dishesRouter.get('/', getAllDishes);
+dishesRouter.get('/', protectedRoute, getAllDishes);
 dishesRouter.post('/add-dish', protectedRoute, restrictedTo('admin'), addDish);
 
 export default dishesRouter;

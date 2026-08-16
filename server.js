@@ -9,7 +9,7 @@ const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
 
 async function connectDB() {
   try {
-    console.log('Connecting to MongoDB...');
+    console.log("Connecting to MongoDB...");
 
     await mongoose.connect(db);
 

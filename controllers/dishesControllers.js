@@ -31,7 +31,7 @@ export const getAllDishes = async (req, res, next) => {
   try {
     const dishes = await Dish.find();
 
-    res.status(201).json({
+    res.status(200).json({
       message: 'success',
       result: dishes.length,
       data: dishes,
