@@ -20,19 +20,21 @@ const limiter = rateLimit({
 const app = express();
 
 app.use(express.static('public'));
-// app.use(
-//   cors({
-//     origin: [
-//       'http://localhost:5173', // Vite
-//       'http://localhost:5500', // LiveServer
-//       'http://localhost:5000', // LiveServer
-//       'http://localhost:3000', // Next.js
-//       'https://your-frontend.vercel.app',
-//     ],
-//     credentials: true,
-//   }),
-// ); // set HTTP headers on response
-app.use(cors());
+
+app.use(
+  cors({
+    origin: [
+      'http://localhost:5173', // Vite
+      'http://localhost:5500', // LiveServer
+      'http://localhost:5000', // LiveServer
+      'http://localhost:3000', // Next.js
+      'https://your-frontend.vercel.app',
+    ],
+    credentials: true,
+  }),
+); // set HTTP headers on response
+
+// app.use(cors());
 app.use(cookieParser());
 app.use(helmet()); // Set HTTP Security Headers
 app.use('/api', limiter); // Limit requests from same IP
