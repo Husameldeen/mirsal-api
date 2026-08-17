@@ -1,7 +1,7 @@
 import express from 'express';
 import usersRouter from './routes/usersRoute.js';
 import dishesRouter from './routes/dishesRouter.js';
-import rateLimit from 'express-rate-limit';
+// import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -9,17 +9,17 @@ import orderRouter from './routes/ordersRoute.js';
 
 const app = express();
 
-const limiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  limit: 100,
+// const limiter = rateLimit({
+//   windowMs: 60 * 60 * 1000,
+//   limit: 100,
 
-  standardHeaders: 'draft-8',
-  legacyHeaders: true, // set false to disable the `X-RateLimit-*` headers.
-  ipv6Subnet: 56,
-  message: 'too much request frm thi IP, Please try again in one hour!',
-});
+//   standardHeaders: 'draft-8',
+//   legacyHeaders: true, // set false to disable the `X-RateLimit-*` headers.
+//   ipv6Subnet: 56,
+//   message: 'too much request frm thi IP, Please try again in one hour!',
+// });
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 // app.use(
 //   cors({
@@ -37,7 +37,7 @@ app.use(express.static('public'));
 app.use(cors());
 app.use(cookieParser());
 app.use(helmet()); // Set HTTP Security Headers
-app.use('/api', limiter); // Limit requests from same IP
+// app.use('/api', limiter); // Limit requests from same IP
 
 app.use(express.json({ limit: '10kb' })); // Reading  data from body of request
 app.set('query parser', 'extended'); // Reading  data from body of request
