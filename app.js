@@ -7,6 +7,8 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import orderRouter from './routes/ordersRoute.js';
 
+const app = express();
+
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   limit: 100,
@@ -17,24 +19,22 @@ const limiter = rateLimit({
   message: 'too much request frm thi IP, Please try again in one hour!',
 });
 
-const app = express();
-
 app.use(express.static('public'));
 
-app.use(
-  cors({
-    origin: [
-      'http://localhost:5173', // Vite
-      'http://localhost:5500', // LiveServer
-      'http://localhost:5000', // LiveServer
-      'http://localhost:3000', // Next.js
-      'https://your-frontend.vercel.app',
-    ],
-    credentials: true,
-  }),
-); // set HTTP headers on response
+// app.use(
+//   cors({
+//     origin: [
+//       'http://localhost:5173', // Vite
+//       'http://localhost:5500', // LiveServer
+//       'http://localhost:5000', // LiveServer
+//       'http://localhost:3000', // Next.js
+//       'https://your-frontend.vercel.app',
+//     ],
+//     credentials: true,
+//   }),
+// ); // set HTTP headers on response
 
-// app.use(cors());
+app.use(cors());
 app.use(cookieParser());
 app.use(helmet()); // Set HTTP Security Headers
 app.use('/api', limiter); // Limit requests from same IP
