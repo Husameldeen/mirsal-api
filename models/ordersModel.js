@@ -43,6 +43,8 @@ const orderSchema = new mongoose.Schema({
     //   required: true,
     // },
   },
+  orderPrice: Number,
+  deliveryPrice: Number,
 });
 
 orderSchema.index({ deliveryLocation: '2dsphere' });

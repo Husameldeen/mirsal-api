@@ -43,3 +43,19 @@ export const getAllDishes = async (req, res, next) => {
     });
   }
 };
+
+export const getDishById = async (req, res, next) => {
+  try {
+    const dish = await Dish.findById(req.params.id);
+
+    res.status(200).json({
+      message: 'success',
+      data: dish,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({
+      message: 'failed',
+    });
+  }
+};
