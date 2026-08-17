@@ -7,7 +7,7 @@ dotenv.config();
 const port = process.env.PORT || 3000;
 const db = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASS);
 
-export default async function connectDB() {
+async function connectDB() {
   try {
     console.log('Connecting to MongoDB...');
 
